@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LuNotebook } from "react-icons/lu";
 import { TbReport } from "react-icons/tb";
-import { BsChatSquareTextFill } from "react-icons/bs";
+import { PiChatCenteredTextFill } from "react-icons/pi";
 import { FiUser } from "react-icons/fi";
 
 const BottomNav = () => {
@@ -36,7 +36,7 @@ const BottomNav = () => {
       shadow-[0_-2px_3px_rgba(0,0,0,0.05)]
     "
     >
-      <nav className="flex justify-between items-center p-4 w-full">
+      <nav className="flex justify-between items-center p-3 w-full">
         <button
           onClick={() => handleNavClick("diary", "/diary")}
           className={`
@@ -66,7 +66,7 @@ const BottomNav = () => {
             ${activeTab === "community" ? "text-[#B28C7E]" : "text-[#EFE8E1]"}
           `}
         >
-          <BsChatSquareTextFill size={24} />
+          <PiChatCenteredTextFill size={24} />
           커뮤니티
         </button>
 
