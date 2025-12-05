@@ -10,7 +10,7 @@ const Container = ({ children, className = "" }: Props) => {
     <div
       className={`
         w-full flex flex-col justify-center items-center
-        px-10 mt-4
+        px-10 mt-4 mb-20
         ${className}
       `}
     >
