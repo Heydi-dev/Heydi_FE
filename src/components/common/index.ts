@@ -7,3 +7,4 @@ export { default as BackHeader } from "./Header&Nav/BackHeader";
 export { default as Container } from "./Container";
 export { default as Button } from "./Button";
 export { default as Input } from "./Input";
+export { default as Modal } from "./Modal";

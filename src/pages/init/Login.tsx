@@ -1,3 +1,14 @@
+/*
+ * Login - 로그인 화면
+ *
+ * 세부사항:
+ * - 아이디, 비밀번호 입력 폼
+ * - 카카오, 구글 로그인 버튼
+ * - 회원가입 페이지 이동 링크
+ * - 유효성 검사
+ * - 로그인 완료 후 Diary Page로 이동
+ */
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input, Button } from "@components/index";
