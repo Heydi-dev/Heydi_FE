@@ -23,3 +23,14 @@ export const getFormattedTime = () => {
 
   return `${period} ${hour12}시 ${paddedMinute}분`;
 };
+
+// 경과 시간(sec)을 00:00 형태로 변환
+export const formatElapsedTime = (sec: number) => {
+  const minutes = Math.floor(sec / 60);
+  const seconds = sec % 60;
+
+  const paddedMin = minutes.toString().padStart(2, "0");
+  const paddedSec = seconds.toString().padStart(2, "0");
+
+  return `${paddedMin}:${paddedSec}`;
+};

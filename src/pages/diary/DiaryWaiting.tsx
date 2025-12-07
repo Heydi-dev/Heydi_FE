@@ -7,11 +7,13 @@
  */
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Button, BackHeader } from "@components/index";
 import Bear from "@assets/icons/bear.svg?react";
 import { getFormattedDate, getFormattedTime } from "@/utils/date";
 
 const DiaryWaiting = () => {
+  const navigate = useNavigate();
   const [today, setToday] = useState("");
   const [time, setTime] = useState("");
 
@@ -19,6 +21,10 @@ const DiaryWaiting = () => {
     setToday(getFormattedDate());
     setTime(getFormattedTime());
   }, []);
+
+  const handleStartChat = () => {
+    navigate("/diary/chat/:sessionId");
+  };
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -41,7 +47,7 @@ const DiaryWaiting = () => {
           </p>
         </div>
 
-        <Button variant="full" className="w-full">
+        <Button variant="full" className="w-full" onClick={handleStartChat}>
           대화 시작하기
         </Button>
       </Container>

@@ -9,6 +9,7 @@ import {
   Signup,
   Diary,
   DiaryWaiting,
+  DiaryChat,
   Report,
   Mypage,
   Loading,
@@ -38,6 +39,8 @@ const App = () => {
             {/* Diary */}
             <Route path="/diary" element={<Diary />} />
             <Route path="/diary/wait" element={<DiaryWaiting />} />
+            <Route path="/diary/chat/:sessionId" element={<DiaryChat />} />
+
             {/* Report */}
             <Route path="/report" element={<Report />} />
 
