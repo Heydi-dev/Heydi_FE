@@ -30,7 +30,7 @@ const Diary = () => {
     <div className="w-full flex flex-col items-center">
       <DefaultHeader showIcon="diary" />
 
-      <Container>
+      <Container withBottomNav={true}>
         {dummyData.map((item, index) => (
           <DiaryCard
             key={index}
