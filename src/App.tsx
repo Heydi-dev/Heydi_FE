@@ -4,7 +4,17 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import { Login, Signup, Diary, Report, Mypage, Loading } from "@pages/index";
+import {
+  Login,
+  Signup,
+  Diary,
+  DiaryWaiting,
+  DiaryChat,
+  DiaryDetail,
+  Report,
+  Mypage,
+  Loading,
+} from "@pages/index";
 
 const App = () => {
   return (
@@ -29,6 +39,9 @@ const App = () => {
           <Route>
             {/* Diary */}
             <Route path="/diary" element={<Diary />} />
+            <Route path="/diary/wait" element={<DiaryWaiting />} />
+            <Route path="/diary/chat/:sessionId" element={<DiaryChat />} />
+            <Route path="/diary/detail/:diaryId" element={<DiaryDetail />} />
 
             {/* Report */}
             <Route path="/report" element={<Report />} />
