@@ -64,7 +64,7 @@ const Community = () => {
             topic={post.topic}
             content={post.content}
             likes={post.likes}
-            onClick={() => navigate(`/community/post/${idx}`)}
+            onClick={() => navigate(`/community/detail/${idx}`)}
           />
         ))}
       </Container>

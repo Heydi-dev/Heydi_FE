@@ -13,6 +13,7 @@ import {
   DiaryDetail,
   Report,
   Community,
+  CommunityDetail,
   Mypage,
   ProfileEdit,
   Loading,
@@ -50,6 +51,10 @@ const App = () => {
 
             {/* Community */}
             <Route path="/community" element={<Community />} />
+            <Route
+              path="/community/detail/:postId"
+              element={<CommunityDetail />}
+            />
 
             {/* MyPage */}
             <Route path="/mypage" element={<Mypage />} />
