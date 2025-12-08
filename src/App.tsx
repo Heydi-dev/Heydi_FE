@@ -18,6 +18,7 @@ import {
   ProfileEdit,
   Loading,
 } from "@pages/index";
+import { ScrollToTop } from "@components/common";
 
 const App = () => {
   return (
@@ -34,6 +35,7 @@ const App = () => {
           [@supports(-webkit-touch-callout:none)]:tap-highlight-transparent
         "
       >
+        <ScrollToTop />
         <Routes>
           {/* Init */}
           <Route path="/" element={<Login />} />
