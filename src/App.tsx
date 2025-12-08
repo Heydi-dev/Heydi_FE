@@ -14,6 +14,7 @@ import {
   Report,
   Community,
   Mypage,
+  ProfileEdit,
   Loading,
 } from "@pages/index";
 
@@ -52,6 +53,7 @@ const App = () => {
 
             {/* MyPage */}
             <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage/edit" element={<ProfileEdit />} />
 
             {/* Etc */}
             <Route path="/etc" element={<Loading />} />
