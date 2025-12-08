@@ -12,9 +12,13 @@ import {
   DiaryChat,
   DiaryDetail,
   Report,
+  Community,
+  CommunityDetail,
   Mypage,
+  ProfileEdit,
   Loading,
 } from "@pages/index";
+import { ScrollToTop } from "@components/common";
 
 const App = () => {
   return (
@@ -31,6 +35,7 @@ const App = () => {
           [@supports(-webkit-touch-callout:none)]:tap-highlight-transparent
         "
       >
+        <ScrollToTop />
         <Routes>
           {/* Init */}
           <Route path="/" element={<Login />} />
@@ -46,8 +51,16 @@ const App = () => {
             {/* Report */}
             <Route path="/report" element={<Report />} />
 
+            {/* Community */}
+            <Route path="/community" element={<Community />} />
+            <Route
+              path="/community/detail/:postId"
+              element={<CommunityDetail />}
+            />
+
             {/* MyPage */}
             <Route path="/mypage" element={<Mypage />} />
+            <Route path="/mypage/edit" element={<ProfileEdit />} />
 
             {/* Etc */}
             <Route path="/etc" element={<Loading />} />
