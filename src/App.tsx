@@ -12,6 +12,7 @@ import {
   DiaryChat,
   DiaryDetail,
   Report,
+  Community,
   Mypage,
   Loading,
 } from "@pages/index";
@@ -45,6 +46,9 @@ const App = () => {
 
             {/* Report */}
             <Route path="/report" element={<Report />} />
+
+            {/* Community */}
+            <Route path="/community" element={<Community />} />
 
             {/* MyPage */}
             <Route path="/mypage" element={<Mypage />} />
