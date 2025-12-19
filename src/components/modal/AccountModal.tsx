@@ -1,3 +1,7 @@
+/*
+ * AccountModal - 계정 관련(로그아웃, 회원탈퇴) 모달
+ */
+
 import { RxExit } from "react-icons/rx";
 import { Button, Modal } from "@components/index";
 

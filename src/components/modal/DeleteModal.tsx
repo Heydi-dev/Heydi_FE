@@ -1,3 +1,7 @@
+/*
+ * DeleteModal - 일기 및 공유글 삭제 모달
+ */
+
 import { TiDelete } from "react-icons/ti";
 import { Button, Modal } from "@components/index";
 
