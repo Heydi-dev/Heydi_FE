@@ -4,7 +4,7 @@ import { LuMenu } from "react-icons/lu";
 import { useState } from "react";
 import Logo from "@assets/logo_txt.svg?react";
 import SaveIcon from "@assets/icons/save.svg?react";
-import { Dropdown, DeleteModal } from "@components/index";
+import { Dropdown, DeleteModal, PdfModal } from "@components/index";
 
 interface BackHeaderProps {
   rightIcon?: "none" | "save" | "menu";
@@ -14,6 +14,7 @@ const BackHeader = ({ rightIcon = "none" }: BackHeaderProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [pdfOpen, setPdfOpen] = useState(false);
 
   const handleBack = () => {
     navigate(-1);
@@ -28,12 +29,23 @@ const BackHeader = ({ rightIcon = "none" }: BackHeaderProps) => {
         setDeleteOpen(true);
       },
     },
-    { label: "PDF로 내보내기", onClick: () => console.log("pdf") },
+    {
+      label: "PDF로 내보내기",
+      onClick: () => {
+        setOpen(false);
+        setPdfOpen(true);
+      },
+    },
   ];
 
   const handleDeleteConfirm = () => {
     console.log("diary deleted");
     setDeleteOpen(false);
+  };
+
+  const handlePdfConfirm = () => {
+    console.log("pdf exported");
+    setPdfOpen(false);
   };
 
   return (
@@ -73,6 +85,12 @@ const BackHeader = ({ rightIcon = "none" }: BackHeaderProps) => {
         type="diary"
         onConfirm={handleDeleteConfirm}
         onClose={() => setDeleteOpen(false)}
+      />
+
+      <PdfModal
+        isOpen={pdfOpen}
+        onConfirm={handlePdfConfirm}
+        onClose={() => setPdfOpen(false)}
       />
     </>
   );
