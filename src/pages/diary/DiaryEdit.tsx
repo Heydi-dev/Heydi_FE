@@ -1,29 +1,20 @@
 /*
- * DiaryDetail - 일기 상세보기 화면
+ * DiaryEdit - 일기 수정 화면
  *
  * 세부사항:
- * - 일기 세부내용 표시
- * - 리포트로 보내기 버튼
+ * - 일기 수정 내용 표시
  * - 임시 더미 데이터 사용
- * - 사진 업로드 기능은 UI만 구현
  */
 
-import { useParams } from "react-router-dom";
-import { Container, Button, BackHeader, DiaryInfoBox } from "@components/index";
+import { Container, BackHeader, DiaryInfoBox } from "@components/index";
 import Plus from "@assets/icons/plus.svg?react";
 
-const DiaryDetail = () => {
-  const { diaryId } = useParams<{ diaryId: string }>();
-
-  const handleSendToReport = () => {
-    console.log("send to report");
-  };
-
+const DiaryEdit = () => {
   return (
     <div className="w-full flex flex-col items-center">
-      <BackHeader rightIcon="menu" diaryId={diaryId} />
+      <BackHeader rightIcon="save" />
 
-      <Container className="pb-10">
+      <Container className="pb-8">
         <div className="w-full bg-white border border-[#E0CFC5] rounded-xl p-4 mb-4">
           <p className="text-sm font-bold text-[#4A4A4A] mb-2">
             12월 7일의 일기
@@ -32,17 +23,35 @@ const DiaryDetail = () => {
           <p className="text-xs text-[#4A4A4A]">총 대화 시간: 07:32</p>
         </div>
 
-        <DiaryInfoBox label="오늘의 감정상태">
+        <DiaryInfoBox
+          label="오늘의 감정상태"
+          type="edit"
+          onEditClick={() => console.log("edit emotion")}
+        >
           오늘은 행복한 하루를 보냈어요.
         </DiaryInfoBox>
 
-        <DiaryInfoBox label="오늘의 주제">여행 / 맛집</DiaryInfoBox>
+        <DiaryInfoBox
+          label="오늘의 주제"
+          type="edit"
+          onEditClick={() => console.log("edit topic")}
+        >
+          여행 / 맛집
+        </DiaryInfoBox>
 
-        <DiaryInfoBox label="오늘의 한 줄 일기">
+        <DiaryInfoBox
+          label="오늘의 한 줄 일기"
+          type="edit"
+          onEditClick={() => console.log("edit one line")}
+        >
           일본 여행을 시작한 첫 날이에요.
         </DiaryInfoBox>
 
-        <DiaryInfoBox label="오늘의 일기">
+        <DiaryInfoBox
+          label="오늘의 일기"
+          type="edit"
+          onEditClick={() => console.log("edit diary")}
+        >
           <p className="text-xs leading-5">
             오늘은 일본 여행 1일차예요. 아침 일찍 비행기를 타고 인천공항에서
             간사이 공항으로 이동했어요. 오랜만에 하는 여행이라서 매우 설렜어요.
@@ -87,17 +96,9 @@ const DiaryDetail = () => {
             사진은 최대 4장까지 업로드 할 수 있어요.
           </p>
         </DiaryInfoBox>
-
-        <Button
-          variant="full"
-          className="w-full mt-8"
-          onClick={handleSendToReport}
-        >
-          리포트로 보내기
-        </Button>
       </Container>
     </div>
   );
 };
 
-export default DiaryDetail;
+export default DiaryEdit;

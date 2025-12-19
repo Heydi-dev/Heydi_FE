@@ -8,9 +8,10 @@ import { Dropdown, DeleteModal, PdfModal } from "@components/index";
 
 interface BackHeaderProps {
   rightIcon?: "none" | "save" | "menu";
+  diaryId?: string;
 }
 
-const BackHeader = ({ rightIcon = "none" }: BackHeaderProps) => {
+const BackHeader = ({ rightIcon = "none", diaryId }: BackHeaderProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -21,7 +22,7 @@ const BackHeader = ({ rightIcon = "none" }: BackHeaderProps) => {
   };
 
   const dropdownItems = [
-    { label: "수정하기", onClick: () => console.log("edit") },
+    { label: "수정하기", onClick: () => navigate(`/diary/edit/${diaryId}`) },
     {
       label: "삭제하기",
       onClick: () => {
