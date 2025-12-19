@@ -7,13 +7,19 @@
  */
 
 import { useState } from "react";
-import { Container, BackHeader, DiaryInfoBox } from "@components/index";
+import {
+  Container,
+  BackHeader,
+  DiaryInfoBox,
+  EmotionModal,
+} from "@components/index";
 import Plus from "@assets/icons/plus.svg?react";
+import { EMOTION_SENTENCE, EMOTION_S_ICONS } from "@constants/emotions";
 import { DIARY_DETAIL_DUMMY } from "@mocks/diary";
-import { EMOTION_SENTENCE } from "@constants/emotions";
 
 const DiaryEdit = () => {
-  const [diary] = useState(DIARY_DETAIL_DUMMY);
+  const [diary, setDiary] = useState(DIARY_DETAIL_DUMMY);
+  const [emotionModalOpen, setEmotionModalOpen] = useState(false);
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -31,9 +37,16 @@ const DiaryEdit = () => {
         <DiaryInfoBox
           label="오늘의 감정상태"
           type="edit"
-          onEditClick={() => console.log("edit emotion")}
+          onEditClick={() => setEmotionModalOpen(true)}
         >
-          오늘은 {EMOTION_SENTENCE[diary.emotion]} 하루를 보냈어요.
+          <div className="flex items-center gap-1">
+            <span className="flex items-center">
+              {EMOTION_S_ICONS[diary.emotion]}
+            </span>
+            <span>
+              오늘은 {EMOTION_SENTENCE[diary.emotion]} 하루를 보냈어요.
+            </span>
+          </div>
         </DiaryInfoBox>
 
         <DiaryInfoBox
@@ -61,7 +74,7 @@ const DiaryEdit = () => {
         </DiaryInfoBox>
 
         <DiaryInfoBox label="오늘의 대화 내용">
-          <div className="w-full flex flex-col gap-2 max-h-[300px] overflow-y-auto">
+          <div className="w-full flex flex-col gap-2 max-h-[300px] overflow-y-auto pt-2">
             {diary.conversations.map((msg, idx) => (
               <div
                 key={idx}
@@ -90,6 +103,18 @@ const DiaryEdit = () => {
           </p>
         </DiaryInfoBox>
       </Container>
+
+      <EmotionModal
+        isOpen={emotionModalOpen}
+        defaultEmotion={diary.emotion}
+        onClose={() => setEmotionModalOpen(false)}
+        onConfirm={nextEmotion => {
+          setDiary(prev => ({
+            ...prev,
+            emotion: nextEmotion,
+          }));
+        }}
+      />
     </div>
   );
 };
