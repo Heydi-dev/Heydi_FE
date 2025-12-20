@@ -3,10 +3,11 @@
  *
  * 세부사항:
  * - 일기 수정 내용 표시
+ * - 감정 상태, 주제, 한 줄 일기, 일기 내용 수정 기능
  * - 임시 더미 데이터 사용
  */
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Container,
   BackHeader,
@@ -22,6 +23,23 @@ const DiaryEdit = () => {
   const [diary, setDiary] = useState(DIARY_DETAIL_DUMMY);
   const [emotionModalOpen, setEmotionModalOpen] = useState(false);
   const [topicModalOpen, setTopicModalOpen] = useState(false);
+  const [editingField, setEditingField] = useState<
+    null | "oneLine" | "content"
+  >(null);
+  const [tempValue, setTempValue] = useState("");
+  const contentRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    if (editingField === "content" && contentRef.current) {
+      const el = contentRef.current;
+
+      el.style.height = "auto";
+      el.style.height = el.scrollHeight - 3.2 + "px";
+
+      const length = el.value.length;
+      el.setSelectionRange(length, length);
+    }
+  }, [editingField]);
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -62,17 +80,77 @@ const DiaryEdit = () => {
         <DiaryInfoBox
           label="오늘의 한 줄 일기"
           type="edit"
-          onEditClick={() => console.log("edit one line")}
+          onEditClick={() => {
+            setEditingField("oneLine");
+            setTempValue(diary.oneLine);
+          }}
         >
-          {diary.oneLine}
+          {editingField === "oneLine" ? (
+            <input
+              value={tempValue}
+              autoFocus
+              spellCheck={false}
+              onChange={e => setTempValue(e.target.value)}
+              onBlur={() => {
+                setDiary(prev => ({
+                  ...prev,
+                  oneLine: tempValue,
+                }));
+                setEditingField(null);
+              }}
+              onKeyDown={e => {
+                if (e.key === "Enter") {
+                  e.currentTarget.blur();
+                }
+              }}
+              className="w-full text-xs focus:outline-none"
+            />
+          ) : (
+            diary.oneLine
+          )}
         </DiaryInfoBox>
 
         <DiaryInfoBox
           label="오늘의 일기"
           type="edit"
-          onEditClick={() => console.log("edit diary")}
+          onEditClick={() => {
+            setEditingField("content");
+            setTempValue(diary.content);
+          }}
         >
-          <p className="text-xs leading-5">{diary.content}</p>
+          {editingField === "content" ? (
+            <textarea
+              ref={contentRef}
+              value={tempValue}
+              autoFocus
+              spellCheck={false}
+              onChange={e => {
+                setTempValue(e.target.value);
+
+                if (contentRef.current) {
+                  contentRef.current.style.height = "auto";
+                  contentRef.current.style.height =
+                    contentRef.current.scrollHeight + "px";
+                }
+              }}
+              onBlur={() => {
+                setDiary(prev => ({
+                  ...prev,
+                  content: tempValue,
+                }));
+                setEditingField(null);
+              }}
+              className="
+                w-full
+                text-xs leading-5
+                resize-none
+                overflow-hidden
+                focus:outline-none
+              "
+            />
+          ) : (
+            <p className="text-xs leading-5">{diary.content}</p>
+          )}
         </DiaryInfoBox>
 
         <DiaryInfoBox label="오늘의 대화 내용">
