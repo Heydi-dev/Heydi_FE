@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 import { Container, Button, BackHeader, DiaryInfoBox } from "@components/index";
 import Plus from "@assets/icons/plus.svg?react";
 import { DIARY_DETAIL_DUMMY } from "@mocks/diary";
-import { EMOTION_SENTENCE } from "@constants/emotions";
+import { EMOTION_S_ICONS, EMOTION_SENTENCE } from "@constants/emotions";
 
 const DiaryDetail = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
@@ -36,10 +36,19 @@ const DiaryDetail = () => {
         </div>
 
         <DiaryInfoBox label="오늘의 감정상태">
-          오늘은 {EMOTION_SENTENCE[diary.emotion]} 하루를 보냈어요.
+          <div className="flex items-center gap-1">
+            <span className="flex items-center">
+              {EMOTION_S_ICONS[diary.emotion]}
+            </span>
+            <span>
+              오늘은 {EMOTION_SENTENCE[diary.emotion]} 하루를 보냈어요.
+            </span>
+          </div>
         </DiaryInfoBox>
 
-        <DiaryInfoBox label="오늘의 주제">{diary.topics}</DiaryInfoBox>
+        <DiaryInfoBox label="오늘의 주제">
+          {diary.topics.join(" / ")}
+        </DiaryInfoBox>
 
         <DiaryInfoBox label="오늘의 한 줄 일기">{diary.oneLine}</DiaryInfoBox>
 

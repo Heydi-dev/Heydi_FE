@@ -12,6 +12,7 @@ import {
   BackHeader,
   DiaryInfoBox,
   EmotionModal,
+  TopicModal,
 } from "@components/index";
 import Plus from "@assets/icons/plus.svg?react";
 import { EMOTION_SENTENCE, EMOTION_S_ICONS } from "@constants/emotions";
@@ -20,6 +21,7 @@ import { DIARY_DETAIL_DUMMY } from "@mocks/diary";
 const DiaryEdit = () => {
   const [diary, setDiary] = useState(DIARY_DETAIL_DUMMY);
   const [emotionModalOpen, setEmotionModalOpen] = useState(false);
+  const [topicModalOpen, setTopicModalOpen] = useState(false);
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -52,9 +54,9 @@ const DiaryEdit = () => {
         <DiaryInfoBox
           label="오늘의 주제"
           type="edit"
-          onEditClick={() => console.log("edit topic")}
+          onEditClick={() => setTopicModalOpen(true)}
         >
-          {diary.topics}
+          {diary.topics.join(" / ")}
         </DiaryInfoBox>
 
         <DiaryInfoBox
@@ -112,6 +114,18 @@ const DiaryEdit = () => {
           setDiary(prev => ({
             ...prev,
             emotion: nextEmotion,
+          }));
+        }}
+      />
+
+      <TopicModal
+        isOpen={topicModalOpen}
+        defaultTopics={diary.topics}
+        onClose={() => setTopicModalOpen(false)}
+        onConfirm={nextTopics => {
+          setDiary(prev => ({
+            ...prev,
+            topics: nextTopics,
           }));
         }}
       />
