@@ -9,7 +9,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Container,
   BackHeader,
@@ -19,13 +19,13 @@ import {
   TopicModal,
 } from "@components/index";
 import { EMOTION_SENTENCE, EMOTION_S_ICONS } from "@constants/emotions";
-import { DIARY_DETAIL_DUMMY } from "@mocks/diary";
+import { DIARY_DETAIL_DUMMIES, DiaryDetailDummy } from "@mocks/diary";
 import { useImageUploader } from "@hooks/useImageUploader";
 import Plus from "@assets/icons/plus.svg?react";
 
 const DiaryEdit = () => {
   const navigate = useNavigate();
-  const [diary, setDiary] = useState(DIARY_DETAIL_DUMMY);
+  const { diaryId } = useParams<{ diaryId: string }>();
   const [emotionModalOpen, setEmotionModalOpen] = useState(false);
   const [topicModalOpen, setTopicModalOpen] = useState(false);
   const [editingField, setEditingField] = useState<
@@ -33,6 +33,9 @@ const DiaryEdit = () => {
   >(null);
   const [tempValue, setTempValue] = useState("");
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const diaryData = DIARY_DETAIL_DUMMIES.find(d => d.diaryId === diaryId)!;
+  const [diary, setDiary] = useState<DiaryDetailDummy>(diaryData);
 
   const {
     images,
@@ -58,7 +61,7 @@ const DiaryEdit = () => {
 
   const handleSave = () => {
     const payload = {
-      id: diary.id,
+      id: diary.diaryId,
       emotion: diary.emotion,
       topics: diary.topics,
       oneLine: diary.oneLine,
@@ -68,7 +71,7 @@ const DiaryEdit = () => {
 
     console.log("SAVE PAYLOAD", payload); // api 연동 시 삭제
 
-    navigate(`/diary/detail/${diary.id}`, {
+    navigate(`/diary/detail/${diary.diaryId}`, {
       replace: true,
     });
   };
@@ -190,10 +193,10 @@ const DiaryEdit = () => {
             {diary.conversations.map((msg, idx) => (
               <div
                 key={idx}
-                className={`text-[10px] p-2 rounded-lg ${
+                className={`text-[10px] p-2 px-3 rounded-lg break-words inline-block w-fit min-w-[60px] ${
                   msg.role === "assistant"
-                    ? "bg-[#EFE8E1] text-[#4A4A4A] max-w-[60%]"
-                    : "bg-[#B28C7E] text-white self-end max-w-[80%]"
+                    ? "bg-[#EFE8E1] text-[#4A4A4A] max-w-[60%] self-start"
+                    : "bg-[#B28C7E] text-white max-w-[80%] self-end"
                 }`}
               >
                 {msg.content}
@@ -225,7 +228,7 @@ const DiaryEdit = () => {
                 <Plus />
               </label>
 
-              <p className="text-[10px] text-[#B28C7E] text-center mt-2">
+              <p className="text-[10px] text-[#B28C7E] text-center font-semibold mt-2">
                 사진은 최대 4장까지 업로드 할 수 있어요.
               </p>
             </>

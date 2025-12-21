@@ -17,7 +17,7 @@ import {
   DiaryInfoBox,
   ImageSlider,
 } from "@components/index";
-import { DIARY_DETAIL_DUMMY } from "@mocks/diary";
+import { DIARY_DETAIL_DUMMIES } from "@mocks/diary";
 import { EMOTION_S_ICONS, EMOTION_SENTENCE } from "@constants/emotions";
 
 const DiaryDetail = () => {
@@ -25,7 +25,16 @@ const DiaryDetail = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSending, setIsSending] = useState(false);
 
-  const diary = DIARY_DETAIL_DUMMY;
+  const diary = DIARY_DETAIL_DUMMIES.find(d => d.diaryId === diaryId);
+
+  if (!diary) {
+    return (
+      <div className="w-full flex justify-center items-center text-center p-10 text-sm font-semibold text-[#76615A]">
+        Error <br />
+        일기를 찾을 수 없습니다.
+      </div>
+    );
+  }
 
   const handleSendToReport = () => {
     if (isSending) return;
@@ -69,14 +78,14 @@ const DiaryDetail = () => {
         </DiaryInfoBox>
 
         <DiaryInfoBox label="오늘의 대화 내용">
-          <div className="w-full flex flex-col gap-2 max-h-[300px] overflow-y-auto">
+          <div className="w-full flex flex-col gap-2 max-h-[300px] overflow-y-auto pt-2">
             {diary.conversations.map((msg, idx) => (
               <div
                 key={idx}
-                className={`text-[10px] p-2 rounded-lg ${
+                className={`text-[10px] p-2 px-3 rounded-lg break-words inline-block w-fit min-w-[60px] ${
                   msg.role === "assistant"
-                    ? "bg-[#EFE8E1] text-[#4A4A4A] max-w-[60%]"
-                    : "bg-[#B28C7E] text-white self-end max-w-[80%]"
+                    ? "bg-[#EFE8E1] text-[#4A4A4A] max-w-[60%] self-start"
+                    : "bg-[#B28C7E] text-white max-w-[80%] self-end"
                 }`}
               >
                 {msg.content}
