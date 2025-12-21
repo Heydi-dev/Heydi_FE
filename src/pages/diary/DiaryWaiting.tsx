@@ -9,7 +9,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button, BackHeader } from "@components/index";
-import Bear from "@assets/icons/bear.svg?react";
+import Bear from "@assets/icons/bear.png";
 import { getFormattedDate, getFormattedTime } from "@/utils/date";
 
 const DiaryWaiting = () => {
@@ -39,7 +39,7 @@ const DiaryWaiting = () => {
           </span>
 
           <div className="mt-6 mb-6">
-            <Bear />
+            <img src={Bear} alt="bear" className="w-50 h-auto" loading="lazy" />
           </div>
 
           <p className="text-xs font-semibold text-[#76615A] mb-15">
