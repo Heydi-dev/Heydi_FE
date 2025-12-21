@@ -9,6 +9,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   BackHeader,
@@ -23,6 +24,7 @@ import { useImageUploader } from "@hooks/useImageUploader";
 import Plus from "@assets/icons/plus.svg?react";
 
 const DiaryEdit = () => {
+  const navigate = useNavigate();
   const [diary, setDiary] = useState(DIARY_DETAIL_DUMMY);
   const [emotionModalOpen, setEmotionModalOpen] = useState(false);
   const [topicModalOpen, setTopicModalOpen] = useState(false);
@@ -54,9 +56,26 @@ const DiaryEdit = () => {
     }
   }, [editingField]);
 
+  const handleSave = () => {
+    const payload = {
+      id: diary.id,
+      emotion: diary.emotion,
+      topics: diary.topics,
+      oneLine: diary.oneLine,
+      content: diary.content,
+      images,
+    };
+
+    console.log("SAVE PAYLOAD", payload); // api 연동 시 삭제
+
+    navigate(`/diary/detail/${diary.id}`, {
+      replace: true,
+    });
+  };
+
   return (
     <div className="w-full flex flex-col items-center">
-      <BackHeader rightIcon="save" />
+      <BackHeader rightIcon="save" onSave={handleSave} />
 
       <Container className="pb-8">
         <div className="w-full bg-white border border-[#E0CFC5] rounded-xl p-4 mb-4">

@@ -9,9 +9,14 @@ import { Dropdown, DeleteModal, PdfModal } from "@components/index";
 interface BackHeaderProps {
   rightIcon?: "none" | "save" | "menu";
   diaryId?: string;
+  onSave?: () => void;
 }
 
-const BackHeader = ({ rightIcon = "none", diaryId }: BackHeaderProps) => {
+const BackHeader = ({
+  rightIcon = "none",
+  diaryId,
+  onSave,
+}: BackHeaderProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -62,7 +67,12 @@ const BackHeader = ({ rightIcon = "none", diaryId }: BackHeaderProps) => {
           <div className="absolute right-4">
             <button
               onClick={() => {
-                if (rightIcon === "menu") setOpen(prev => !prev);
+                if (rightIcon === "save") {
+                  onSave?.();
+                }
+                if (rightIcon === "menu") {
+                  setOpen(prev => !prev);
+                }
               }}
               className="cursor-pointer"
             >

@@ -22,11 +22,16 @@ import { EMOTION_S_ICONS, EMOTION_SENTENCE } from "@constants/emotions";
 
 const DiaryDetail = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
-  const diary = DIARY_DETAIL_DUMMY;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSending, setIsSending] = useState(false);
+
+  const diary = DIARY_DETAIL_DUMMY;
 
   const handleSendToReport = () => {
+    if (isSending) return;
+
     console.log("send to report");
+    setIsSending(true);
   };
 
   return (
@@ -94,6 +99,7 @@ const DiaryDetail = () => {
           variant="full"
           className="w-full mt-8"
           onClick={handleSendToReport}
+          disabled={isSending}
         >
           리포트로 보내기
         </Button>
