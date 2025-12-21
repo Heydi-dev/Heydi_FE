@@ -30,7 +30,7 @@ const DiaryWaiting = () => {
     <div className="w-full flex flex-col items-center">
       <BackHeader />
 
-      <Container>
+      <Container className="pb-10">
         <div className="flex flex-col items-center text-center mt-20 mb-20">
           <span className="text-2xl font-bold text-[#76615A]">{today}</span>
 
