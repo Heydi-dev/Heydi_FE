@@ -52,7 +52,7 @@ const DeleteModal = ({
       }
     >
       <div className="flex items-center gap-3 px-3 py-3 bg-[#EFE8E1] rounded-lg mt-2 mb-6">
-        <TiDelete size={20} color="#B28C7E" />
+        <TiDelete size={28} color="#B28C7E" />
         <span
           className={`text-[#4A4A4A] font-semibold ${
             type === "post" ? "text-xs" : "text-sm"

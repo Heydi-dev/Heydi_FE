@@ -57,7 +57,7 @@ const BackHeader = ({
   return (
     <>
       <header className="relative w-full bg-white flex items-center justify-center p-4">
-        <button onClick={handleBack} className="absolute left-4">
+        <button onClick={handleBack} className="absolute left-4 cursor-pointer">
           <MdArrowBackIosNew size={24} color="#B28C7E" />
         </button>
 
