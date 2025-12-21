@@ -5,18 +5,25 @@
  * - 일기 세부내용 표시
  * - 리포트로 보내기 버튼
  * - 임시 더미 데이터 사용
- * - 사진 업로드 기능은 UI만 구현
+ * - 사진 데이터가 있을 때만 오늘의 사진 보이기
  */
 
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Button, BackHeader, DiaryInfoBox } from "@components/index";
-import Plus from "@assets/icons/plus.svg?react";
+import {
+  Container,
+  Button,
+  BackHeader,
+  DiaryInfoBox,
+  ImageSlider,
+} from "@components/index";
 import { DIARY_DETAIL_DUMMY } from "@mocks/diary";
 import { EMOTION_S_ICONS, EMOTION_SENTENCE } from "@constants/emotions";
 
 const DiaryDetail = () => {
   const { diaryId } = useParams<{ diaryId: string }>();
   const diary = DIARY_DETAIL_DUMMY;
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleSendToReport = () => {
     console.log("send to report");
@@ -73,18 +80,15 @@ const DiaryDetail = () => {
           </div>
         </DiaryInfoBox>
 
-        <DiaryInfoBox label="오늘의 사진">
-          <label
-            className="w-full h-[120px] bg-[#EFE8E1] rounded-xl border border-[#E0CFC5]
-                       flex flex-col items-center justify-center cursor-pointer"
-          >
-            <Plus />
-          </label>
-
-          <p className="text-[10px] text-[#B28C7E] text-center mt-2">
-            사진은 최대 4장까지 업로드 할 수 있어요.
-          </p>
-        </DiaryInfoBox>
+        {diary.images.length > 0 && (
+          <DiaryInfoBox label="오늘의 사진">
+            <ImageSlider
+              images={diary.images}
+              currentIndex={currentIndex}
+              onChangeIndex={setCurrentIndex}
+            />
+          </DiaryInfoBox>
+        )}
 
         <Button
           variant="full"

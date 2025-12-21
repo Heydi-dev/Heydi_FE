@@ -4,6 +4,7 @@
  * 세부사항:
  * - 일기 수정 내용 표시
  * - 감정 상태, 주제, 한 줄 일기, 일기 내용 수정 기능
+ * - 사진 업로드 및 삭제 기능
  * - 임시 더미 데이터 사용
  */
 
@@ -12,12 +13,14 @@ import {
   Container,
   BackHeader,
   DiaryInfoBox,
+  ImageSlider,
   EmotionModal,
   TopicModal,
 } from "@components/index";
-import Plus from "@assets/icons/plus.svg?react";
 import { EMOTION_SENTENCE, EMOTION_S_ICONS } from "@constants/emotions";
 import { DIARY_DETAIL_DUMMY } from "@mocks/diary";
+import { useImageUploader } from "@hooks/useImageUploader";
+import Plus from "@assets/icons/plus.svg?react";
 
 const DiaryEdit = () => {
   const [diary, setDiary] = useState(DIARY_DETAIL_DUMMY);
@@ -28,6 +31,16 @@ const DiaryEdit = () => {
   >(null);
   const [tempValue, setTempValue] = useState("");
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const {
+    images,
+    currentIndex,
+    setCurrentIndex,
+    removeImage,
+    fileInputRef,
+    openFilePicker,
+    handleFiles,
+  } = useImageUploader();
 
   useEffect(() => {
     if (editingField === "content" && contentRef.current) {
@@ -170,17 +183,50 @@ const DiaryEdit = () => {
           </div>
         </DiaryInfoBox>
 
-        <DiaryInfoBox label="오늘의 사진">
-          <label
-            className="w-full h-[120px] bg-[#EFE8E1] rounded-xl border border-[#E0CFC5]
-                       flex flex-col items-center justify-center cursor-pointer"
-          >
-            <Plus />
-          </label>
+        <DiaryInfoBox
+          label="오늘의 사진"
+          type="image"
+          imageCount={images.length}
+          maxImageCount={4}
+          onImageAddClick={openFilePicker}
+        >
+          {images.length === 0 ? (
+            <>
+              <label
+                onClick={openFilePicker}
+                className="
+                  w-full h-[120px]
+                  bg-[#EFE8E1]
+                  rounded-xl
+                  border border-[#E0CFC5]
+                  flex items-center justify-center
+                  cursor-pointer
+                "
+              >
+                <Plus />
+              </label>
 
-          <p className="text-[10px] text-[#B28C7E] text-center mt-2">
-            사진은 최대 4장까지 업로드 할 수 있어요.
-          </p>
+              <p className="text-[10px] text-[#B28C7E] text-center mt-2">
+                사진은 최대 4장까지 업로드 할 수 있어요.
+              </p>
+            </>
+          ) : (
+            <ImageSlider
+              images={images}
+              currentIndex={currentIndex}
+              onChangeIndex={setCurrentIndex}
+              onRemove={removeImage}
+            />
+          )}
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            hidden
+            onChange={e => handleFiles(e.target.files)}
+          />
         </DiaryInfoBox>
       </Container>
 

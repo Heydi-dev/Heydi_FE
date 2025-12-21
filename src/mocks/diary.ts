@@ -15,6 +15,7 @@ export interface DiaryDetailDummy {
   oneLine: string;
   content: string;
   conversations: DiaryMessage[];
+  images: string[];
 }
 
 export const DIARY_DETAIL_DUMMY: DiaryDetailDummy = {
@@ -43,4 +44,5 @@ export const DIARY_DETAIL_DUMMY: DiaryDetailDummy = {
       content: "공항에 도착하자마자 짐을 찾고 바로 숙소로 이동했어.",
     },
   ],
+  images: [],
 };
