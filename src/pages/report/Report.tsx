@@ -12,6 +12,7 @@
  * - 하드코딩 된 데이터 사용
  */
 
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -21,11 +22,17 @@ import {
   EmotionChart,
   TagSection,
   Calendar,
+  MonthModal,
 } from "@components/index";
 import { IoCalendarNumberOutline } from "react-icons/io5";
 
 const Report = () => {
   const navigate = useNavigate();
+
+  const today = new Date();
+  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth() + 1);
+  const [isMonthModalOpen, setIsMonthModalOpen] = useState(false);
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -33,9 +40,14 @@ const Report = () => {
 
       <Container withBottomNav={true}>
         <div className="w-full flex flex-col mb-3">
-          <div className="flex justify-end items-center text-xs font-bold text-[#4A4A4A] gap-1 mb-1">
+          <div
+            className="flex justify-end items-center text-xs font-bold text-[#4A4A4A] gap-1 mb-1 cursor-pointer"
+            onClick={() => setIsMonthModalOpen(true)}
+          >
             <IoCalendarNumberOutline size={18} color="#76615A" />
-            <span>2025년 12월</span>
+            <span>
+              {year}년 {month}월
+            </span>
           </div>
 
           <p className="text-base font-bold text-[#4A4A4A]">
@@ -126,6 +138,17 @@ const Report = () => {
       </Container>
 
       <BottomNav />
+
+      <MonthModal
+        isOpen={isMonthModalOpen}
+        onClose={() => setIsMonthModalOpen(false)}
+        defaultYear={year}
+        defaultMonth={month}
+        onConfirm={(y, m) => {
+          setYear(y);
+          setMonth(m);
+        }}
+      />
     </div>
   );
 };
