@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { EMOTION_S_ICONS, EmotionKey } from "@/constants/emotions";
+import { EMOTION_S_ICONS } from "@constants/emotions";
+import type { EmotionChartItem } from "@mocks/report";
 
-const EmotionChart = () => {
+const EmotionChart = ({ data }: { data: EmotionChartItem[] }) => {
   const location = useLocation();
   const [animate, setAnimate] = useState(false);
 
@@ -10,14 +11,6 @@ const EmotionChart = () => {
     setAnimate(false);
     requestAnimationFrame(() => setAnimate(true));
   }, [location.pathname]);
-
-  const data: { week: string; percent: number; emotion: EmotionKey }[] = [
-    { week: "1주", percent: 72, emotion: "happy" },
-    { week: "2주", percent: 54, emotion: "sad" },
-    { week: "3주", percent: 68, emotion: "joy" },
-    { week: "4주", percent: 72, emotion: "happy" },
-    { week: "5주", percent: 38, emotion: "neutral" },
-  ];
 
   const percents = data.map(d => d.percent);
   const max = Math.max(...percents);

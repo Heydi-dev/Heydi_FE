@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { CalendarProps, CalendarDate, CALENDAR_DUMMY } from "@mocks/report";
+import { CalendarProps, CalendarDate, CalendarEntry } from "@mocks/report";
 
-const Calendar = ({ year, month }: CalendarProps) => {
+const Calendar = ({
+  year,
+  month,
+  calendars,
+}: CalendarProps & { calendars: CalendarEntry[] }) => {
   const navigate = useNavigate();
 
   const firstDay = new Date(year, month - 1, 1);
@@ -20,12 +24,17 @@ const Calendar = ({ year, month }: CalendarProps) => {
   }
 
   while (dates.length % 7 !== 0) {
-    dates.push({ day: dates.length - lastDate - startDay + 1, current: false });
+    dates.push({
+      day: dates.length - lastDate - startDay + 1,
+      current: false,
+    });
   }
 
   const diaryMap: Record<number, number> = {};
-  CALENDAR_DUMMY.forEach(d => {
-    if (d.year === year && d.month === month) diaryMap[d.day] = d.diaryId;
+  calendars.forEach(d => {
+    if (d.year === year && d.month === month) {
+      diaryMap[d.day] = d.diaryId;
+    }
   });
 
   const hasDiary = (day?: number) => !!day && diaryMap[day];

@@ -25,6 +25,7 @@ import {
   MonthModal,
 } from "@components/index";
 import { IoCalendarNumberOutline } from "react-icons/io5";
+import { CALENDAR_DUMMY, EMOTION_CHART_DUMMY } from "@mocks/report";
 
 const Report = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const Report = () => {
             이번달의 감정 변화
           </p>
         </div>
-        <EmotionChart />
+        <EmotionChart data={EMOTION_CHART_DUMMY} />
 
         <div className="w-full flex flex-col mb-3">
           <p className="text-base font-bold text-[#4A4A4A]">자주 나온 주제</p>
@@ -121,7 +122,7 @@ const Report = () => {
           <p className="text-base font-bold text-[#4A4A4A]">캘린더</p>
         </div>
 
-        <Calendar year={year} month={month} />
+        <Calendar year={year} month={month} calendars={CALENDAR_DUMMY} />
 
         <div className="w-full mt-6 mb-2">
           <p className="text-base font-bold text-[#4A4A4A] mb-2">
