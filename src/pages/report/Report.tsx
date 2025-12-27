@@ -121,7 +121,7 @@ const Report = () => {
           <p className="text-base font-bold text-[#4A4A4A]">캘린더</p>
         </div>
 
-        <Calendar />
+        <Calendar year={year} month={month} />
 
         <div className="w-full mt-6 mb-2">
           <p className="text-base font-bold text-[#4A4A4A] mb-2">
