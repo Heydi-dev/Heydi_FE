@@ -15,6 +15,26 @@ export const EMOTION_CHART_DUMMY: EmotionChartItem[] = [
   { week: "5주", percent: 38, emotion: "neutral" },
 ];
 
+// Topics
+export interface Topic {
+  rank: number;
+  title: string;
+  percent: number;
+  description?: string;
+}
+
+export const TOPICS_DUMMY: Topic[] = [
+  {
+    rank: 1,
+    title: "학업",
+    percent: 32,
+    description: "시험과 과제, 진로에 대한 주제가 가장 많이 등장했어요",
+  },
+  { rank: 2, title: "인간관계", percent: 21 },
+  { rank: 3, title: "취미", percent: 17 },
+  { rank: 4, title: "건강", percent: 11 },
+];
+
 // Calendar
 export interface CalendarProps {
   year: number;

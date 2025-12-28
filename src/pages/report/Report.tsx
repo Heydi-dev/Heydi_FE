@@ -20,12 +20,16 @@ import {
   BottomNav,
   DiaryCard,
   EmotionChart,
-  TagSection,
+  TopTopics,
   Calendar,
   MonthModal,
 } from "@components/index";
 import { IoCalendarNumberOutline } from "react-icons/io5";
-import { CALENDAR_DUMMY, EMOTION_CHART_DUMMY } from "@mocks/report";
+import {
+  EMOTION_CHART_DUMMY,
+  TOPICS_DUMMY,
+  CALENDAR_DUMMY,
+} from "@mocks/report";
 
 const Report = () => {
   const navigate = useNavigate();
@@ -60,7 +64,7 @@ const Report = () => {
         <div className="w-full flex flex-col mb-3">
           <p className="text-base font-bold text-[#4A4A4A]">자주 나온 주제</p>
         </div>
-        <TagSection />
+        <TopTopics topics={TOPICS_DUMMY} />
 
         <div className="w-full mb-6">
           <div className="flex justify-between">
