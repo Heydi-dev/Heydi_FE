@@ -16,7 +16,6 @@ import {
   DiaryCard,
 } from "@components/index";
 import { DIARY_LIST_DUMMIES } from "@mocks/diary";
-import { EMOTIONS } from "@constants/emotions";
 
 const Diary = () => {
   const navigate = useNavigate();
@@ -31,9 +30,9 @@ const Diary = () => {
           .map(item => (
             <DiaryCard
               key={item.diaryId}
-              date={item.title}
-              emotion={EMOTIONS[item.emotion]}
-              topic={item.topics.join(" / ")}
+              title={item.title}
+              emotion={item.emotion}
+              topics={item.topics}
               onClick={() => navigate(`/diary/detail/${item.diaryId}`)}
             />
           ))}
