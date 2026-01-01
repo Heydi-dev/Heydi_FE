@@ -9,3 +9,4 @@ export { default as ImageSlider } from "./ImageSlider";
 
 // Community
 export { default as CommunityCard } from "./CommunityCard";
+export { default as SelectDiaryCard } from "./SelectDiaryCard";
