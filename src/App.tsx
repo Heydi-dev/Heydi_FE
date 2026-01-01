@@ -16,6 +16,7 @@ import {
   Community,
   CommunityDetail,
   SelectDiary,
+  PostEdit,
   Mypage,
   ProfileEdit,
   Loading,
@@ -61,6 +62,10 @@ const App = () => {
               element={<CommunityDetail />}
             />
             <Route path="/community/select-diary" element={<SelectDiary />} />
+            <Route
+              path="/community/post-edit/:diaryId"
+              element={<PostEdit />}
+            />
 
             {/* MyPage */}
             <Route path="/mypage" element={<Mypage />} />

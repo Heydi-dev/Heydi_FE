@@ -22,7 +22,7 @@ const SelectDiary = () => {
 
   const handleSelect = () => {
     if (!selectedDiaryId) return;
-    navigate(`/community/post-edit/${selectedDiaryId}`);
+    navigate(`/community/post-edit/${selectedDiaryId}`, { replace: true });
   };
 
   return (
