@@ -10,11 +10,17 @@
  */
 
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { Container, BackHeader, ImageSlider } from "@components/index";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  Container,
+  BackHeader,
+  ImageSlider,
+  DeleteModal,
+} from "@components/index";
 import { FaHeart } from "react-icons/fa";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaTrashAlt } from "react-icons/fa";
 import DefaultProfile from "@assets/icons/profile_s.svg";
 import Send from "@assets/icons/send.svg?react";
 import { EMOTIONS } from "@constants/emotions";
@@ -23,6 +29,7 @@ import { POST_DETAIL_DUMMIES } from "@mocks/community";
 const PostDetail = () => {
   const currentUser = "Test";
   const { postId } = useParams<{ postId: string }>();
+  const navigate = useNavigate();
 
   const post = POST_DETAIL_DUMMIES.find(p => p.postId === postId);
 
@@ -33,10 +40,17 @@ const PostDetail = () => {
   const [likeCount, setLikeCount] = useState(post.likes);
   const [comments, setComments] = useState(post.comments);
   const [inputValue, setInputValue] = useState("");
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const handleToggleLike = () => {
     setIsLiked(prev => !prev);
     setLikeCount(prev => (isLiked ? prev - 1 : prev + 1));
+  };
+
+  const handleDeletePost = () => {
+    console.log("delete post:", post.postId);
+    setIsDeleteOpen(false);
+    navigate(-1);
   };
 
   const handleAddComment = () => {
@@ -59,7 +73,7 @@ const PostDetail = () => {
       <BackHeader />
 
       <Container>
-        <div className="bg-white border border-[#E0CFC5] rounded-xl p-4 shadow-sm mb-6">
+        <div className="bg-white border border-[#E0CFC5] w-full rounded-xl p-4 shadow-sm mb-6">
           <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
               <img
@@ -119,6 +133,15 @@ const PostDetail = () => {
                 {comments.length}
               </span>
             </div>
+
+            {post.user === currentUser && (
+              <button
+                onClick={() => setIsDeleteOpen(true)}
+                className="ml-auto cursor-pointer"
+              >
+                <FaTrashAlt size={18} color="#B28C7E" />
+              </button>
+            )}
           </div>
         </div>
 
@@ -159,6 +182,13 @@ const PostDetail = () => {
           </button>
         </div>
       </Container>
+
+      <DeleteModal
+        isOpen={isDeleteOpen}
+        type="post"
+        onClose={() => setIsDeleteOpen(false)}
+        onConfirm={handleDeletePost}
+      />
     </div>
   );
 };
