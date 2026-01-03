@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import DefaultProfile from "@assets/icons/profile_s.svg";
 import { CommunityComment } from "@mocks/community";
+import { CommentDropdown } from "@components/index";
 
 interface CommentItemProps {
   comment: CommunityComment;
@@ -9,6 +11,15 @@ interface CommentItemProps {
 
 const CommentItem = ({ comment, currentUser }: CommentItemProps) => {
   const isMine = comment.user === currentUser;
+  const [open, setOpen] = useState(false);
+
+  const handleEditComment = () => {
+    console.log("edit comment");
+  };
+
+  const handleDeleteComment = () => {
+    console.log("delete comment");
+  };
 
   return (
     <div className="flex gap-3 w-full">
@@ -18,7 +29,7 @@ const CommentItem = ({ comment, currentUser }: CommentItemProps) => {
       />
 
       <div className="flex-1">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-3 relative">
           <p
             className={`text-xs font-bold ${
               isMine ? "text-[#B28C7E]" : "text-[#4A4A4A]"
@@ -27,7 +38,28 @@ const CommentItem = ({ comment, currentUser }: CommentItemProps) => {
             {comment.user}
           </p>
 
-          {isMine && <BsThreeDotsVertical size={16} color="#76615A" />}
+          {isMine && (
+            <div className="relative">
+              <button onClick={() => setOpen(prev => !prev)}>
+                <BsThreeDotsVertical
+                  size={16}
+                  color="#76615A"
+                  className="cursor-pointer"
+                />
+              </button>
+
+              <CommentDropdown
+                open={open}
+                onClose={() => setOpen(false)}
+                onEdit={() => {
+                  handleEditComment();
+                }}
+                onDelete={() => {
+                  handleDeleteComment();
+                }}
+              />
+            </div>
+          )}
         </div>
 
         <div
