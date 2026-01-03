@@ -56,7 +56,7 @@ export const COMMUNITY_POST_DUMMIES: CommunityCardProps[] = [
 // Community Post Detail
 export interface CommunityComment {
   user: string;
-  profile?: string;
+  profile: string;
   content: string;
 }
 

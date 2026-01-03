@@ -5,6 +5,7 @@
  * - 글 작성자 프로필, 작성일, 제목, 감정, 주제, 내용, 작성된 일기 날짜 표시
  * - 좋아요 및 댓글 수 표시 및 좋아요 기능 구현
  * - 댓글 목록 표시 및 댓글 작성 기능 구현
+ * - 글 작성자일 경우 글 삭제 기능 제공
  * - 현재 사용자는 "Test"로 가정
  * - 더미 데이터 사용
  */
@@ -15,14 +16,13 @@ import {
   Container,
   BackHeader,
   ImageSlider,
+  Comment,
   DeleteModal,
 } from "@components/index";
 import { FaHeart } from "react-icons/fa";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaTrashAlt } from "react-icons/fa";
 import DefaultProfile from "@assets/icons/profile_s.svg";
-import Send from "@assets/icons/send.svg?react";
 import { EMOTIONS } from "@constants/emotions";
 import { POST_DETAIL_DUMMIES } from "@mocks/community";
 
@@ -38,8 +38,7 @@ const PostDetail = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likes);
-  const [comments, setComments] = useState(post.comments);
-  const [inputValue, setInputValue] = useState("");
+  const [comments] = useState(post.comments);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const handleToggleLike = () => {
@@ -51,21 +50,6 @@ const PostDetail = () => {
     console.log("delete post:", post.postId);
     setIsDeleteOpen(false);
     navigate(-1);
-  };
-
-  const handleAddComment = () => {
-    if (!inputValue.trim()) return;
-
-    setComments(prev => [
-      ...prev,
-      {
-        user: currentUser,
-        profile: "",
-        content: inputValue,
-      },
-    ]);
-
-    setInputValue("");
   };
 
   return (
@@ -145,42 +129,7 @@ const PostDetail = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 w-full mb-20">
-          {comments.map((c, idx) => (
-            <div key={idx} className="flex gap-3 items-start w-full">
-              <img
-                src={c.profile || DefaultProfile}
-                className="w-7 h-7 rounded-full opacity-60"
-              />
-
-              <div className="flex-1 w-full">
-                <p className="text-[11px] font-bold text-[#4A4A4A] mb-1">
-                  {c.user}
-                </p>
-                <p className="text-[11px] leading-4 text-[#4A4A4A] break-words">
-                  {c.content}
-                </p>
-              </div>
-
-              {c.user === currentUser && (
-                <BsThreeDotsVertical size={16} color="#76615A" />
-              )}
-            </div>
-          ))}
-        </div>
-
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[425px] bg-white py-3 px-4 flex items-center gap-2 border-t border-[#eee]">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={e => setInputValue(e.target.value)}
-            placeholder="내용을 입력하세요"
-            className="flex-1 h-10 border rounded-lg border-[#D9D9D9] px-3 text-[12px] outline-none"
-          />
-          <button onClick={handleAddComment}>
-            <Send />
-          </button>
-        </div>
+        <Comment initialComments={post.comments} currentUser={currentUser} />
       </Container>
 
       <DeleteModal
