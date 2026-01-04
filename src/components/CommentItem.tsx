@@ -7,15 +7,21 @@ import { CommentDropdown } from "@components/index";
 interface CommentItemProps {
   comment: CommunityComment;
   currentUser: string;
+  onEdit: () => void;
   onDelete: () => void;
 }
 
-const CommentItem = ({ comment, currentUser, onDelete }: CommentItemProps) => {
+const CommentItem = ({
+  comment,
+  currentUser,
+  onEdit,
+  onDelete,
+}: CommentItemProps) => {
   const isMine = comment.user === currentUser;
   const [open, setOpen] = useState(false);
 
   const handleEditComment = () => {
-    console.log("edit comment");
+    onEdit();
   };
 
   const handleDeleteClick = () => {

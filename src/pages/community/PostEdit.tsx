@@ -71,7 +71,8 @@ const PostEdit = () => {
 
     console.log("SAVE PAYLOAD", payload); // api 연동 시 삭제
 
-    navigate(`/community/detail/${diary.diaryId}`, {
+    // api 호출 시 반환되는 postId로 이동. 지금은 임시로 1 고정
+    navigate(`/community/detail/1`, {
       replace: true,
     });
   };
