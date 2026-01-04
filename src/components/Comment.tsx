@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import CommentItem from "./CommentItem";
 import Send from "@assets/icons/send.svg?react";
 import { CommunityComment } from "@mocks/community";
+import { Toast } from "@components/index";
 
 interface CommentProps {
   initialComments: CommunityComment[];
@@ -11,6 +12,8 @@ interface CommentProps {
 const Comment = ({ initialComments, currentUser }: CommentProps) => {
   const [comments, setComments] = useState<CommunityComment[]>(initialComments);
   const [inputValue, setInputValue] = useState("");
+  const [toastOpen, setToastOpen] = useState(false);
+
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const isAddedByMe = useRef(false);
 
@@ -31,6 +34,11 @@ const Comment = ({ initialComments, currentUser }: CommentProps) => {
     setInputValue("");
   };
 
+  const handleDeleteComment = (index: number) => {
+    setComments(prev => prev.filter((_, i) => i !== index));
+    setToastOpen(true);
+  };
+
   useEffect(() => {
     if (!isAddedByMe.current) return;
 
@@ -42,7 +50,12 @@ const Comment = ({ initialComments, currentUser }: CommentProps) => {
     <>
       <div className="flex flex-col gap-6 w-full mb-20">
         {comments.map((comment, idx) => (
-          <CommentItem key={idx} comment={comment} currentUser={currentUser} />
+          <CommentItem
+            key={idx}
+            comment={comment}
+            currentUser={currentUser}
+            onDelete={() => handleDeleteComment(idx)}
+          />
         ))}
         <div ref={bottomRef} />
       </div>
@@ -59,6 +72,12 @@ const Comment = ({ initialComments, currentUser }: CommentProps) => {
           <Send />
         </button>
       </div>
+
+      <Toast
+        open={toastOpen}
+        message="댓글을 삭제했습니다."
+        onClose={() => setToastOpen(false)}
+      />
     </>
   );
 };

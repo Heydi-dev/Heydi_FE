@@ -7,9 +7,10 @@ import { CommentDropdown } from "@components/index";
 interface CommentItemProps {
   comment: CommunityComment;
   currentUser: string;
+  onDelete: () => void;
 }
 
-const CommentItem = ({ comment, currentUser }: CommentItemProps) => {
+const CommentItem = ({ comment, currentUser, onDelete }: CommentItemProps) => {
   const isMine = comment.user === currentUser;
   const [open, setOpen] = useState(false);
 
@@ -17,8 +18,9 @@ const CommentItem = ({ comment, currentUser }: CommentItemProps) => {
     console.log("edit comment");
   };
 
-  const handleDeleteComment = () => {
-    console.log("delete comment");
+  const handleDeleteClick = () => {
+    onDelete();
+    setOpen(false);
   };
 
   return (
@@ -51,12 +53,8 @@ const CommentItem = ({ comment, currentUser }: CommentItemProps) => {
               <CommentDropdown
                 open={open}
                 onClose={() => setOpen(false)}
-                onEdit={() => {
-                  handleEditComment();
-                }}
-                onDelete={() => {
-                  handleDeleteComment();
-                }}
+                onEdit={handleEditComment}
+                onDelete={handleDeleteClick}
               />
             </div>
           )}
