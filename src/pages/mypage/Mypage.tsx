@@ -19,21 +19,23 @@ import {
 } from "@components/index";
 import DefaultProfile from "@assets/icons/profile.svg";
 import { IoChevronForward } from "react-icons/io5";
+import { MYPAGE_DUMMY } from "@mocks/mypage";
 
 const Mypage = () => {
   const nevigate = useNavigate();
-  const [alarmEnabled, setAlarmEnabled] = useState(false);
+
+  const { user, likedPosts, sharedPosts, alarm } = MYPAGE_DUMMY;
+
+  const [alarmEnabled, setAlarmEnabled] = useState(alarm.enabled);
+  const [alarmTime, setAlarmTime] = useState<{
+    ampm: "AM" | "PM";
+    hour: number;
+    minute: number;
+  } | null>(alarm.enabled ? alarm : null);
   const [isAlarmModalOpen, setIsAlarmModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"logout" | "withdraw" | null>(
     null,
   );
-
-  const user = {
-    username: "Test1",
-    profile_url: "",
-    likedPosts: 2,
-    sharedPosts: 1,
-  };
 
   const profileImage = user.profile_url || DefaultProfile;
 
@@ -59,29 +61,29 @@ const Mypage = () => {
           <img
             src={profileImage}
             alt="profile"
-            className="w-[124px] h-[124px] rounded-full object-cover mb-3"
+            className="w-[124px] h-[124px] rounded-full object-cover mb-2"
           />
-          <span className="text-base font-bold text-[#4A4A4A]">
-            {user.username}
+          <span className="text-lg font-bold text-[#4A4A4A]">
+            {user.nickname}
           </span>
         </div>
 
         <div className="flex justify-between gap-6 w-full mb-10">
-          <div className="flex-1 h-20 border border-[#D4B6A6] bg-[#EFE8E1] rounded-xl flex flex-col items-center justify-center">
-            <span className="text-xs font-semibold text-[#4A4A4A] mb-1">
+          <div className="flex-1 h-22 border border-[#D4B6A6] bg-[#EFE8E1] rounded-xl flex flex-col items-center justify-center">
+            <span className="text-sm font-semibold text-[#4A4A4A] mb-2">
               내가 좋아요 한 글
             </span>
-            <span className="text-[20px] font-bold text-[#B28C7E]">
-              {user.likedPosts}
+            <span className="text-[24px] font-bold text-[#B28C7E]">
+              {likedPosts}
             </span>
           </div>
 
-          <div className="flex-1 h-20 border border-[#D4B6A6] bg-[#EFE8E1] rounded-xl flex flex-col items-center justify-center">
-            <span className="text-xs font-semibold text-[#4A4A4A] mb-1">
+          <div className="flex-1 h-22 border border-[#D4B6A6] bg-[#EFE8E1] rounded-xl flex flex-col items-center justify-center">
+            <span className="text-sm font-semibold text-[#4A4A4A] mb-2">
               내가 공유 한 글
             </span>
-            <span className="text-[20px] font-bold text-[#B28C7E]">
-              {user.sharedPosts}
+            <span className="text-[24px] font-bold text-[#B28C7E]">
+              {sharedPosts}
             </span>
           </div>
         </div>
@@ -148,14 +150,17 @@ const Mypage = () => {
         <AlarmModal
           isOpen={true}
           onClose={() => setIsAlarmModalOpen(false)}
+          defaultAmPm={alarmTime?.ampm}
+          defaultHour={alarmTime?.hour}
+          defaultMinute={alarmTime?.minute}
           onConfirm={(ampm, hour, minute) => {
-            console.log("알람 설정:", ampm, hour, minute);
             setAlarmEnabled(true);
+            setAlarmTime({ ampm, hour, minute });
             setIsAlarmModalOpen(false);
           }}
           onDisable={() => {
-            console.log("알람 해제");
             setAlarmEnabled(false);
+            setAlarmTime(null);
             setIsAlarmModalOpen(false);
           }}
         />
