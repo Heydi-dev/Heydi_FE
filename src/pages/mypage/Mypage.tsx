@@ -5,6 +5,7 @@
  * - 프로필 이미지, 닉네임, 내가 좋아요/공유한 글 수 표시
  * - 프로필 수정, 알림 설정, 로그아웃, 회원탈퇴 기능 제공
  * - AccountModal: 로그아웃 및 회원탈퇴 확인 모달 표시
+ * - AlarmModal: 알림 설정 모달 표시 (알림 활성화/비활성화 토글), 선택된 시간 없을 시 기본값 현재 시간
  */
 
 import { useState } from "react";
@@ -14,6 +15,7 @@ import {
   DefaultHeader,
   BottomNav,
   AccountModal,
+  AlarmModal,
 } from "@components/index";
 import DefaultProfile from "@assets/icons/profile.svg";
 import { IoChevronForward } from "react-icons/io5";
@@ -21,6 +23,7 @@ import { IoChevronForward } from "react-icons/io5";
 const Mypage = () => {
   const nevigate = useNavigate();
   const [alarmEnabled, setAlarmEnabled] = useState(false);
+  const [isAlarmModalOpen, setIsAlarmModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"logout" | "withdraw" | null>(
     null,
   );
@@ -93,17 +96,23 @@ const Mypage = () => {
           <IoChevronForward size={24} color="#B28C7E" />
         </div>
 
-        <div className="w-full flex justify-between items-center py-4">
+        <div
+          className="w-full flex justify-between items-center py-4 cursor-pointer"
+          onClick={() => setIsAlarmModalOpen(true)}
+        >
           <span className="text-base font-semibold text-[#4A4A4A]">
             알림 설정
           </span>
 
           <div
             className={`
-              w-13 h-7 flex items-center rounded-full p-1 cursor-pointer transition-all
+              w-13 h-7 flex items-center rounded-full p-1 transition-all
               ${alarmEnabled ? "bg-[#B28C7E]" : "bg-[#EFE8E1]"}
             `}
-            onClick={() => setAlarmEnabled(prev => !prev)}
+            onClick={e => {
+              e.stopPropagation();
+              setAlarmEnabled(prev => !prev);
+            }}
           >
             <div
               className={`
@@ -134,6 +143,23 @@ const Mypage = () => {
       </Container>
 
       <BottomNav />
+
+      {isAlarmModalOpen && (
+        <AlarmModal
+          isOpen={true}
+          onClose={() => setIsAlarmModalOpen(false)}
+          onConfirm={(ampm, hour, minute) => {
+            console.log("알람 설정:", ampm, hour, minute);
+            setAlarmEnabled(true);
+            setIsAlarmModalOpen(false);
+          }}
+          onDisable={() => {
+            console.log("알람 해제");
+            setAlarmEnabled(false);
+            setIsAlarmModalOpen(false);
+          }}
+        />
+      )}
 
       <AccountModal
         isOpen={modalType !== null}
