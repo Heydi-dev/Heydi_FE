@@ -81,7 +81,10 @@ const Mypage = () => {
             </span>
           </div>
 
-          <div className="flex-1 h-22 border border-[#D4B6A6] bg-[#EFE8E1] rounded-xl flex flex-col items-center justify-center">
+          <div
+            className="flex-1 h-22 border border-[#D4B6A6] bg-[#EFE8E1] rounded-xl flex flex-col items-center justify-center cursor-pointer"
+            onClick={() => nevigate("/mypage/shared-posts")}
+          >
             <span className="text-sm font-semibold text-[#4A4A4A] mb-2">
               내가 공유 한 글
             </span>
