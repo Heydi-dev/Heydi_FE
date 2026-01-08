@@ -40,6 +40,7 @@ const Community = () => {
               content={post.content}
               likes={post.likes}
               comments={post.comments}
+              liked={post.liked}
               onClick={() => navigate(`/community/detail/${post.postId}`)}
             />
           ))}
