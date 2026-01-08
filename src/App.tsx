@@ -19,6 +19,7 @@ import {
   PostEdit,
   Mypage,
   ProfileEdit,
+  LikePosts,
   Loading,
 } from "@pages/index";
 import { ScrollToTop } from "@components/common";
@@ -67,6 +68,7 @@ const App = () => {
             {/* MyPage */}
             <Route path="/mypage" element={<Mypage />} />
             <Route path="/mypage/edit" element={<ProfileEdit />} />
+            <Route path="/mypage/like-posts" element={<LikePosts />} />
 
             {/* Etc */}
             <Route path="/etc" element={<Loading />} />
