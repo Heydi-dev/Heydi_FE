@@ -1,4 +1,4 @@
-# 📓 [Heydi](https://heydi-liart.vercel.app/)
+# 📓 [Heydi](https://heydi.site/)
 
 > **대화로 정리하는 나만의 일기, 헤이디**
 
